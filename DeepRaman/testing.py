@@ -89,37 +89,10 @@ class SpatialPyramidPooling(Layer):
         return outputs
 
 
-def WhittakerSmooth(x, lamb, w):
-    m=w.shape[0]
-    W=spdiags(w,0,m,m)
-    D=eye(m-1,m,1)-eye(m-1,m)
-    return spsolve((W+lamb*D.transpose()*D),w*x)
-    
-def airPLS(x, lamb=10, itermax=10):
-    m=x.shape[0]
-    w=np.ones(m)
-    for i in range(itermax):
-        z=WhittakerSmooth(x,lamb,w)
-        d=x-z
-        if sum(abs(d[d<0]))<0.001*sum(abs(x)):
-            break;
-        w[d<0]=np.exp(i*d[d<0]/sum(d[d<0]))
-        w[d>=0]=0
-    return z
 
-def airPLS_MAT(X, lamb=10, itermax=10):
-    B=X.copy()
-    for i in range(X.shape[0]):
-        B[i,]=airPLS(X[i,],lamb,itermax)
-    return X-B
 
-def WhittakerSmooth_MAT(X, lamb=1):
-    C=X.copy()
-    w=np.ones(X.shape[1])
-    for i in range(X.shape[0]):
-        C[i,]=WhittakerSmooth(X[i,:], lamb, w)
 
-    return C
+
 
 if __name__ == '__main__':
  
