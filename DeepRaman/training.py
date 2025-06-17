@@ -205,7 +205,7 @@ if __name__ == '__main__':
     }     
 
     # define the data path and save path
-    datapath = './data'
+    datapath = r'C:\Users\MathiasCharconnet\PycharmProjects\DeepRaman/DeepRaman/data'
 
     start = time.time()
     savepath = './model'
